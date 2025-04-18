@@ -1,0 +1,20 @@
+export const gifts = [
+  "/src/assets/images/products/U_BC_GIFTS_FOR_HER_10_AUGUST24_DII.webp",
+  "/src/assets/images/products/louis-vuitton-my-monogram-fame-rectangle-sunglasses--Z2136U_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-khan-choang-monogram-shine--M75122_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-vong-tay-blooming--M1485A_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-tui-carryall-bb--M13014_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-tui-neverfull-bandouliere-inside-out-mm--M12096_PM2_Front view.png",
+  "/src/assets/images/products/louis-vuitton-tui-diane--M45985_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-tui-felicie-pochette--M14227_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-nuoc-hoa-spell-on-you--LP0212_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-khan-quang-reykjavik--M71040_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-tui-onthego-mm--M45595_PM2_Front view.avif",
+  "/src/assets/images/products/U_BC_GIFTS_FOR_HER_21_AUGUST24_DII.webp",
+  "/src/assets/images/products/louis-vuitton-nuoc-hoa-ombre-nomade--LP0095_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-tui-liv-pochette--M83301_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-tui-nano-madeleine--M12144_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-tui-boulogne--M12930_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-vong-co-lv-floragram--M00981_PM2_Front view.avif",
+  "/src/assets/images/products/louis-vuitton-vi-đung-ho-chieu--M63914_PM2_Front view.avif"
+];
