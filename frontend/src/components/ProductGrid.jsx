@@ -42,11 +42,7 @@ export function ProductGrid() {
                                 src={product.thumbnail || product.image}
                                 alt={product.title || product.name}
                             />
-                            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0">
-                                <span className="px-4 py-2 bg-white text-black font-medium">
-                                    Xem chi tiết
-                                </span>
-                            </div>
+                            
                         </div>
                         <p className="mt-2 font-medium text-center">{product.title || product.name}</p>
                     </Link>

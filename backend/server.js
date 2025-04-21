@@ -25,6 +25,7 @@ import productRoutes from './routes/productRoutes.js';
 import bannerRoutes from './routes/bannerRoutes.js';
 import collectionRoutes from './routes/collectionRoutes.js';
 import giftRoutes from './routes/giftRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 // Sử dụng các route chuẩn hóa
 app.use('/api/users', userRoutes);
@@ -32,12 +33,24 @@ app.use('/api/products', productRoutes);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/collections', collectionRoutes);
 app.use('/api/gifts', giftRoutes);
+app.use('/api/auth', authRoutes);
 
 // MongoDB Models
 
 // Routes
 app.get('/', (req, res) => {
   res.send('API is running...');
+});
+
+// Route kiểm tra kết nối PostgreSQL
+import pool from './postgres.js';
+app.get('/test-pg', async (req, res) => {
+  try {
+    await pool.query('SELECT 1');
+    res.send('Kết nối PostgreSQL OK!');
+  } catch (err) {
+    res.status(500).send('Kết nối PostgreSQL lỗi: ' + err.stack);
+  }
 });
 
 // Start the server

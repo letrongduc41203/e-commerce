@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CartPopup from './CartPopup';
-import { Menu, X, Search, UserRound, LogOut } from 'lucide-react';
+import { Menu, X, Search, UserRound } from 'lucide-react';
 // import { collections } from '../data/collections'; // Đã chuyển sang lấy từ API MongoDB
-import { users } from '../data/users';
 
 export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDecrease, onRemove, user, onLogin, onLogout }) {
+    const [showUserInfo, setShowUserInfo] = useState(false);
+    const popupRef = React.useRef(null);
+    // Ẩn popup khi click ra ngoài
+    React.useEffect(() => {
+        if (!showUserInfo) return;
+        function handleClickOutside(event) {
+            if (popupRef.current && !popupRef.current.contains(event.target)) {
+                setShowUserInfo(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [showUserInfo]);
     // user và setUser được quản lý từ App, không cần useState ở đây
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [loginInfo, setLoginInfo] = useState({ username: '', password: '' });
@@ -132,60 +144,40 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                     )}
                 </div>
                 <Link to="/" className="text-xl font-bold">LOUIS VUITTON</Link>
+
                 <div className="flex items-center gap-2 relative">
                     {/* Đăng nhập/Đăng xuất */}
-                    {user ? (
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium">👤 {user.name}</span>
-                            <button className="text-xs px-2 py-1 border rounded hover:bg-gray-100" onClick={onLogout}>
-                                <LogOut className="w-5 h-5" />
-                            </button>
-                        </div>
-                    ) : (
-                        <button className="flex items-center gap-1 text-xs px-2 py-1 border rounded hover:bg-gray-100" onClick={() => setShowLoginModal(true)}>
-                            <UserRound className="w-5 h-5" />
-                        </button>
-                    )}
+                    {user && user.firstName && user.lastName ? (
+                        <button
+                            className="flex items-center gap-1 text-xs px-2 py-1 border rounded hover:bg-gray-100 relative"
+                            onClick={() => setShowUserInfo(v => !v)}
+                            type="button"
+                        >
+                            <span className="font-semibold text-sm cursor-pointer">{user.firstName} {user.lastName}</span>
 
-                    {/* Modal đăng nhập */}
-                    {showLoginModal && (
-                        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-30">
-                            <div className="bg-white rounded-lg shadow-lg p-8 min-w-[320px] relative">
-                                <button className="absolute top-2 right-2 text-gray-400 hover:text-black" onClick={() => setShowLoginModal(false)}><X className="w-5 h-5" /></button>
-                                <h2 className="font-bold mb-4 text-lg text-center">Đăng nhập</h2>
-                                <input
-                                    type="text"
-                                    className="w-full border rounded px-3 py-2 mb-3 outline-none"
-                                    placeholder="Tên đăng nhập"
-                                    value={loginInfo.username}
-                                    onChange={e => setLoginInfo({ ...loginInfo, username: e.target.value })}
-                                />
-                                <input
-                                    type="password"
-                                    className="w-full border rounded px-3 py-2 mb-3 outline-none"
-                                    placeholder="Mật khẩu"
-                                    value={loginInfo.password}
-                                    onChange={e => setLoginInfo({ ...loginInfo, password: e.target.value })}
-                                />
-                                {loginError && <div className="text-red-500 text-xs mb-2">{loginError}</div>}
-                                <button
-                                    className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 font-semibold"
-                                    onClick={() => {
-                                        const found = users.find(u => u.username === loginInfo.username && u.password === loginInfo.password);
-                                        if (found) {
-                                            onLogin(found);
-                                            setShowLoginModal(false);
-                                            setLoginError('');
-                                            setLoginInfo({ username: '', password: '' });
-                                        } else {
-                                            setLoginError('Tên đăng nhập hoặc mật khẩu không đúng!');
-                                        }
-                                    }}
-                                >
-                                    Đăng nhập
-                                </button>
-                            </div>
-                        </div>
+                            {/* Popup nhỏ khi click */}
+                            
+                            {showUserInfo && (
+    <div ref={popupRef} className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white border rounded shadow px-3 py-2 text-xs whitespace-nowrap z-50 flex items-center gap-2 min-w-[120px]">
+        <span>{user.firstName} {user.lastName}</span>
+        <button
+            className="ml-2 px-2 py-1 bg-gray-200 rounded text-xs font-medium hover:bg-gray-300 transition"
+            onClick={onLogout}
+            type="button"
+        >
+            Đăng xuất
+        </button>
+    </div>
+)}
+                        </button>
+                    ) : (
+                        <button
+                            className="flex items-center gap-1 text-xs px-2 py-1 border rounded hover:bg-gray-100 relative"
+                            onClick={() => navigate('/login')}
+                            type="button"
+                        >
+                            <UserRound className="w-5 h-5 cursor-pointer" />
+                        </button>
                     )}
 
                     <button

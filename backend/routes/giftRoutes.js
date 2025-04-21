@@ -2,36 +2,21 @@ import express from 'express';
 import { body } from 'express-validator';
 import auth from '../middleware/auth.js';
 import validateRequest from '../middleware/validateRequest.js';
-import { getGifts, createGift, updateGift, deleteGift } from '../controllers/giftController.js';
+// TODO: Implement createGift, updateGift, deleteGift in giftController.js
+import { getGifts } from '../controllers/giftController.js';
 
 const router = express.Router();
 
 // Lấy danh sách gift
 router.get('/', getGifts);
 
-// Thêm gift mới (yêu cầu đăng nhập)
-router.post(
-  '/',
-  auth,
-  [
-    body('image').notEmpty().withMessage('Ảnh gift là bắt buộc')
-  ],
-  validateRequest,
-  createGift
-);
+// TODO: Thêm handler cho tạo mới gift (createGift) sau khi bổ sung vào giftController.js
+// router.post('/', ...);
 
-// Cập nhật gift (yêu cầu đăng nhập)
-router.put(
-  '/:id',
-  auth,
-  [
-    body('image').optional().notEmpty().withMessage('Ảnh gift không được để trống')
-  ],
-  validateRequest,
-  updateGift
-);
+// TODO: Thêm handler cho cập nhật gift (updateGift) sau khi bổ sung vào giftController.js
+// router.put('/:id', ...);
 
-// Xóa gift (yêu cầu đăng nhập)
-router.delete('/:id', auth, deleteGift);
+// TODO: Thêm handler cho xóa gift (deleteGift) sau khi bổ sung vào giftController.js
+// router.delete('/:id', ...);
 
 export default router;

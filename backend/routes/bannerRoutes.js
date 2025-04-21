@@ -2,46 +2,21 @@ import express from 'express';
 import { body } from 'express-validator';
 import auth from '../middleware/auth.js';
 import validateRequest from '../middleware/validateRequest.js';
-import { getBanners, createBanner, updateBanner, deleteBanner } from '../controllers/bannerController.js';
+// TODO: Implement createBanner, updateBanner, deleteBanner in bannerController.js
+import { getBanners } from '../controllers/bannerController.js';
 
 const router = express.Router();
 
 // Lấy danh sách banner
 router.get('/', getBanners);
 
-// Thêm banner mới (yêu cầu đăng nhập)
-router.post(
-  '/',
-  auth,
-  [
-    body('hero.title').notEmpty().withMessage('Hero title là bắt buộc'),
-    body('hero.description').notEmpty().withMessage('Hero description là bắt buộc'),
-    body('hero.image').notEmpty().withMessage('Hero image là bắt buộc'),
-    body('hero.buttonText').notEmpty().withMessage('Hero buttonText là bắt buộc'),
-    body('hero.buttonLink').notEmpty().withMessage('Hero buttonLink là bắt buộc'),
-    body('featured').isArray().withMessage('Featured phải là mảng')
-  ],
-  validateRequest,
-  createBanner
-);
+// TODO: Thêm handler cho tạo mới banner (createBanner) sau khi bổ sung vào bannerController.js
+// router.post('/', ...);
 
-// Cập nhật banner (yêu cầu đăng nhập)
-router.put(
-  '/:id',
-  auth,
-  [
-    body('hero.title').optional().notEmpty().withMessage('Hero title không được để trống'),
-    body('hero.description').optional().notEmpty().withMessage('Hero description không được để trống'),
-    body('hero.image').optional().notEmpty().withMessage('Hero image không được để trống'),
-    body('hero.buttonText').optional().notEmpty().withMessage('Hero buttonText không được để trống'),
-    body('hero.buttonLink').optional().notEmpty().withMessage('Hero buttonLink không được để trống'),
-    body('featured').optional().isArray().withMessage('Featured phải là mảng')
-  ],
-  validateRequest,
-  updateBanner
-);
+// TODO: Thêm handler cho cập nhật banner (updateBanner) sau khi bổ sung vào bannerController.js
+// router.put('/:id', ...);
 
-// Xóa banner (yêu cầu đăng nhập)
-router.delete('/:id', auth, deleteBanner);
+// TODO: Thêm handler cho xóa banner (deleteBanner) sau khi bổ sung vào bannerController.js
+// router.delete('/:id', ...);
 
 export default router;

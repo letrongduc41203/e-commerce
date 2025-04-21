@@ -33,7 +33,24 @@ export default function CartPopup({ cartItems, onClose, onIncrease, onDecrease, 
             </div>
             {/* Footer */}
             <div className="p-4 border-t flex flex-col gap-3">
-                <button className="w-full bg-black text-white py-3 font-bold rounded">CHECKOUT</button>
+                <button
+  className="w-full bg-black text-white py-3 font-bold rounded"
+  onClick={() => {
+    let user = null;
+    try {
+      user = JSON.parse(localStorage.getItem('lv_user'));
+    } catch {}
+    if (!user) {
+      alert('Bạn cần đăng nhập để thanh toán!');
+      window.location.href = '/login';
+      return;
+    }
+    // Nếu đã đăng nhập, chuyển đến trang checkout
+    window.location.href = '/checkout';
+  }}
+>
+  CHECKOUT
+</button>
                 <button
                   className="w-full border border-black py-3 font-bold rounded"
                   onClick={() => {

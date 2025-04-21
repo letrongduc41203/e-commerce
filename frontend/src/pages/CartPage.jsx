@@ -65,7 +65,25 @@ export default function CartPage({ cartItems, onIncrease, onDecrease, onRemove }
                 <button className="w-full border border-black py-3 font-bold rounded flex items-center justify-center gap-2">
                     <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" className="w-6 h-6" /> PayPal
                 </button>
-                <button className="w-full bg-black text-white py-3 font-bold rounded">Checkout</button>
+                
+                <button
+                    className="w-full bg-black text-white py-3 font-bold rounded"
+                    onClick={() => {
+                        let user = null;
+                        try {
+                            user = JSON.parse(localStorage.getItem('lv_user'));
+                        } catch { }
+                        if (!user) {
+                            alert('Bạn cần đăng nhập để thanh toán!');
+                            window.location.href = '/login';
+                            return;
+                        }
+                        // Nếu đã đăng nhập, chuyển đến trang checkout
+                        window.location.href = '/checkout';
+                    }}
+                >
+                    Checkout
+                </button>
                 <div className="text-xs text-center mt-2">
                     <a href="#" className="underline">Login</a> or <a href="#" className="underline">Create a Friend & Me account</a>
                 </div>

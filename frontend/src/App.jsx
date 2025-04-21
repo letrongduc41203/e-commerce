@@ -1,12 +1,14 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation, Link } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { Home } from './pages/Home';
-import Collections from './pages/Collections';
-import { Gifts } from './pages/Gifts';
-import ProductDetail from './components/ProductDetail';
-import CartPage from './pages/CartPage';
+import { Home } from "./pages/Home";
+import Collections from "./pages/Collections";
+import Gifts from "./pages/Gifts";
+import ProductDetail from "./components/ProductDetail";
+import CartPage from "./pages/CartPage";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
     const [user, setUser] = React.useState(() => {
@@ -89,9 +91,18 @@ function App() {
         setCartItems(stored ? JSON.parse(stored) : []);
     };
 
+    // Simple navbar chỉ có logo
+    const location = useLocation();
+    const SimpleNavbar = () => (
+      <nav className="w-full h-14 flex items-center px-6 border-b bg-white">
+        <Link to="/" className="text-xl font-bold tracking-widest">LOUIS VUITTON</Link>
+      </nav>
+    );
+
     return (
         <div>
-            <Navbar
+            {location.pathname === '/login' || location.pathname === '/register' ? <SimpleNavbar /> : (
+              <Navbar
                 cartItems={cartItems}
                 isCartOpen={isCartOpen}
                 setIsCartOpen={setIsCartOpen}
@@ -101,17 +112,20 @@ function App() {
                 onIncrease={handleIncrease}
                 onDecrease={handleDecrease}
                 onRemove={handleRemove}
-            />
+              />
+            )}
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/collections/:season" element={<Collections />} />
                 <Route path="/gifts" element={<Gifts />} />
                 <Route path="/product/:id" element={<ProductDetail addToCart={addToCart} />} />
                 <Route path="/cart" element={<CartPage cartItems={cartItems} onIncrease={handleIncrease} onDecrease={handleDecrease} onRemove={handleRemove} />} />
+                <Route path="/login" element={<Login onLogin={handleLogin} />} />
+                <Route path="/register" element={<Register />} />
             </Routes>
             <Footer />
         </div>
     );
 }
 
-export default App; 
+export default App;
