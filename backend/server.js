@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 });
 
 // Route kiểm tra kết nối PostgreSQL
-import pool from './postgres.js';
+import pool from './config/db.js';
 app.get('/test-pg', async (req, res) => {
   try {
     await pool.query('SELECT 1');
