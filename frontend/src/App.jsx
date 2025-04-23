@@ -2,7 +2,8 @@ import React from 'react';
 import { Routes, Route, useLocation, Link } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { Home } from "./pages/Home";
+import Home from './pages/Home.jsx';
+import Checkout from './pages/Checkout.jsx';
 import Collections from "./pages/Collections";
 import Gifts from "./pages/Gifts";
 import ProductDetail from "./components/ProductDetail";
@@ -94,25 +95,25 @@ function App() {
     // Simple navbar chỉ có logo
     const location = useLocation();
     const SimpleNavbar = () => (
-      <nav className="w-full h-14 flex items-center px-6 border-b bg-white">
-        <Link to="/" className="text-xl font-bold tracking-widest">LOUIS VUITTON</Link>
-      </nav>
+        <nav className="w-full h-14 flex items-center px-6 border-b bg-white">
+            <Link to="/" className="text-xl font-bold tracking-widest">LOUIS VUITTON</Link>
+        </nav>
     );
 
     return (
         <div>
             {location.pathname === '/login' || location.pathname === '/register' ? <SimpleNavbar /> : (
-              <Navbar
-                cartItems={cartItems}
-                isCartOpen={isCartOpen}
-                setIsCartOpen={setIsCartOpen}
-                user={user}
-                onLogin={handleLogin}
-                onLogout={handleLogout}
-                onIncrease={handleIncrease}
-                onDecrease={handleDecrease}
-                onRemove={handleRemove}
-              />
+                <Navbar
+                    cartItems={cartItems}
+                    isCartOpen={isCartOpen}
+                    setIsCartOpen={setIsCartOpen}
+                    user={user}
+                    onLogin={handleLogin}
+                    onLogout={handleLogout}
+                    onIncrease={handleIncrease}
+                    onDecrease={handleDecrease}
+                    onRemove={handleRemove}
+                />
             )}
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -122,6 +123,7 @@ function App() {
                 <Route path="/cart" element={<CartPage cartItems={cartItems} onIncrease={handleIncrease} onDecrease={handleDecrease} onRemove={handleRemove} />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/checkout" element={<Checkout />} />
             </Routes>
             <Footer />
         </div>

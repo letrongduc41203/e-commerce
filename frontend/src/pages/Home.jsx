@@ -3,7 +3,7 @@ import { HeroSection } from '../components/HeroSection';
 import { ProductGrid } from '../components/ProductGrid';
 import { FeaturedSection } from '../components/FeaturedSection';
 
-export function Home() {
+function Home() {
     return (
         <div>
             <HeroSection />
@@ -11,4 +11,6 @@ export function Home() {
             <FeaturedSection />
         </div>
     );
-} 
+}
+
+export default Home;

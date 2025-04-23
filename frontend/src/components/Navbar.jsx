@@ -4,7 +4,7 @@ import CartPopup from './CartPopup';
 import { Menu, X, Search, UserRound } from 'lucide-react';
 // import { collections } from '../data/collections'; // Đã chuyển sang lấy từ API MongoDB
 
-export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDecrease, onRemove, user, onLogin, onLogout }) {
+export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDecrease, onRemove, user, onLogout }) {
     const [showUserInfo, setShowUserInfo] = useState(false);
     const popupRef = React.useRef(null);
     // Ẩn popup khi click ra ngoài
@@ -19,9 +19,6 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [showUserInfo]);
     // user và setUser được quản lý từ App, không cần useState ở đây
-    const [showLoginModal, setShowLoginModal] = useState(false);
-    const [loginInfo, setLoginInfo] = useState({ username: '', password: '' });
-    const [loginError, setLoginError] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [hoveredId, setHoveredId] = useState(null);
 
@@ -156,19 +153,19 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                             <span className="font-semibold text-sm cursor-pointer">{user.firstName} {user.lastName}</span>
 
                             {/* Popup nhỏ khi click */}
-                            
+
                             {showUserInfo && (
-    <div ref={popupRef} className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white border rounded shadow px-3 py-2 text-xs whitespace-nowrap z-50 flex items-center gap-2 min-w-[120px]">
-        <span>{user.firstName} {user.lastName}</span>
-        <button
-            className="ml-2 px-2 py-1 bg-gray-200 rounded text-xs font-medium hover:bg-gray-300 transition"
-            onClick={onLogout}
-            type="button"
-        >
-            Đăng xuất
-        </button>
-    </div>
-)}
+                                <div ref={popupRef} className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white border rounded shadow px-3 py-2 text-xs whitespace-nowrap z-50 flex items-center gap-2 min-w-[120px]">
+                                    <span>{user.firstName} {user.lastName}</span>
+                                    <button
+                                        className="ml-2 px-2 py-1 bg-gray-200 rounded text-xs font-medium hover:bg-gray-300 transition"
+                                        onClick={onLogout}
+                                        type="button"
+                                    >
+                                        Đăng xuất
+                                    </button>
+                                </div>
+                            )}
                         </button>
                     ) : (
                         <button
