@@ -97,7 +97,15 @@ const Checkout = () => {
         if (!shipping.address) errors.address = 'Please enter address';
         if (!shipping.city) errors.city = 'Please enter city';
         if (!shipping.state) errors.state = 'Please enter state';
-        if (!shipping.phone) errors.phone = 'Please enter phone number';
+        if (!shipping.phone) {
+            errors.phone = 'Please enter phone number';
+        } else if (shipping.phoneCode === 'vn') {
+            // Kiểm tra số điện thoại Việt Nam hợp lệ
+            const vnPhoneRegex = /^0(3|5|7|8|9)[0-9]{8}$/;
+            if (!vnPhoneRegex.test(shipping.phone)) {
+                errors.phone = 'Số điện thoại Việt Nam không hợp lệ (bắt đầu bằng 03, 05, 07, 08, 09 và đủ 10 số)';
+            }
+        }
         setShippingErrors(errors);
         if (Object.keys(errors).length === 0) {
             setStep(3);
