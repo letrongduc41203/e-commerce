@@ -33,7 +33,7 @@ const Collections = () => {
     }
 
     return (
-        <div className="w-full mt-16">
+        <div className="w-full mt-16 mb-10">
             {/* Banner Section */}
             <div className="relative w-full h-auto mb-8">
                 <img

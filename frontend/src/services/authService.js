@@ -1,6 +1,20 @@
 //  file trung gian để frontend gọi các API đăng nhập/đăng ký của backend 
 const API_URL = "http://localhost:5000/api/auth";
 
+// Đổi mật khẩu: truyền vào token xác thực, mật khẩu cũ và mới
+export async function changePassword({ oldPassword, newPassword, token }) {
+  const res = await fetch(`${API_URL}/change-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ oldPassword, newPassword })
+  });
+  if (!res.ok) throw new Error("Đổi mật khẩu thất bại");
+  return res.json();
+}
+
 export async function login(email, password) {
   const res = await fetch(`${API_URL}/login`, {
     method: "POST",

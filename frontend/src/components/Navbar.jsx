@@ -67,7 +67,7 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                 {/* Menu + Search group */}
                 <div className="flex items-center gap-4 flex-shrink-0">
                     <button
-                        className="text-lg font-medium flex items-center gap-2"
+                        className="text-lg flex items-center gap-2"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         <Menu className="w-6 h-6" /> Menu
@@ -80,7 +80,7 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                             type="button"
                         >
                             <Search className="w-5 h-5 text-black" />
-                            <span className="text-base text-black">Tìm kiếm</span>
+                            <span className="text-lg text-black">Search</span>
                         </button>
                     </div>
                     {/* Overlay Search UI */}
@@ -94,8 +94,7 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                             >
                                 <X className="w-6 h-6" />
                             </button>
-                            {/* Logo */}
-                            <div className="text-2xl font-bold mb-6 mt-2">LOUIS VUITTON</div>
+                          
                             {/* Search input */}
                             <div className="w-full max-w-2xl flex items-center border border-gray-300 rounded-full px-4 py-2 mb-4">
                                 <Search className="w-5 h-5 text-gray-400 mr-2" />
@@ -140,7 +139,8 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                         </div>
                     )}
                 </div>
-                <Link to="/" className="text-xl font-bold">LOUIS VUITTON</Link>
+                
+                <Link to="/" className="text-3xl font-bold">Linea della Vita</Link>
 
                 <div className="flex items-center gap-2 relative">
                     {/* Đăng nhập/Đăng xuất */}
@@ -155,14 +155,27 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                             {/* Popup nhỏ khi click */}
 
                             {showUserInfo && (
-                                <div ref={popupRef} className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white border rounded shadow px-3 py-2 text-xs whitespace-nowrap z-50 flex items-center gap-2 min-w-[120px]">
-                                    <span>{user.firstName} {user.lastName}</span>
+                                <div
+                                    ref={popupRef}
+                                    className="absolute right-0 top-full mt-2 w-64 bg-white border rounded shadow-lg z-50 py-4 px-0 flex flex-col min-w-[220px]"
+                                    style={{ minWidth: 220 }}
+                                >
+                                    <div className="flex flex-col">
+                                        <div
+                                            className="text-left px-5 py-2 font-semibold text-base hover:bg-gray-100 transition cursor-pointer"
+                                            onClick={() => { setShowUserInfo(false); navigate('/user-info'); }}
+                                        >
+                                            ACCOUNT SETTINGS
+                                        </div>
+                                        <div className="text-left px-5 py-2 font-semibold text-base hover:bg-gray-100 transition cursor-pointer">MY ORDERS</div>
+                                    </div>
+                                    <hr className="my-3 border-gray-200" />
                                     <button
-                                        className="ml-2 px-2 py-1 bg-gray-200 rounded text-xs font-medium hover:bg-gray-300 transition"
+                                        className="text-left px-5 py-2 text-sm font-medium text-black hover:underline hover:bg-gray-50 transition"
                                         onClick={onLogout}
                                         type="button"
                                     >
-                                        Đăng xuất
+                                        SIGN OUT
                                     </button>
                                 </div>
                             )}

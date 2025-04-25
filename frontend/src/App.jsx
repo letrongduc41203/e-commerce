@@ -10,6 +10,10 @@ import ProductDetail from "./components/ProductDetail";
 import CartPage from "./pages/CartPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import UserInfo from "./pages/UserInfo.jsx";
+import NewArrHer from "./pages/NewArrHer";
+// import NewArrHim from "./pages/NewArrHim";
+// import Accessories from "./pages/Accessories";
 
 function App() {
     const [user, setUser] = React.useState(() => {
@@ -124,6 +128,10 @@ function App() {
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/user-info" element={<UserInfo />} />
+                <Route path="/new-arrivals-for-her" element={<NewArrHer />} />
+                {/* <Route path="/new-arrivals-for-him" element={<NewArrHim />} /> */}
+                {/* <Route path="/accessories" element={<NewArrHer />} /> */}
             </Routes>
             <Footer />
         </div>

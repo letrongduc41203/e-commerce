@@ -13,6 +13,16 @@ const bannerSchema = new mongoose.Schema({
       id: Number,
       image: String
     }
+  ],
+
+  body: [
+    {
+      id: Number,
+      image: String,
+      title: String,
+      buttonText: String,
+      buttonLink: String
+    }
   ]
 });
 

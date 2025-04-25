@@ -4,7 +4,7 @@ export const collections = [
         name: 'Bộ sưu tập Xuân Hè 2025',
         slug: 'spring-summer-2025',
         banner: '/src/assets/images/banner/bannerLisa.jpeg',
-        modelImage: '/src/assets/images/banner/W_BC_SPRINGSUMMER 2025COLLECTION_WORN_JAN25_03_DII.jpg',
+        modelImage: '/src/assets/images/banner/W_BC_SPRINGSUMMER Lisa.jpg',
         products: [
             {
                 id: 1,

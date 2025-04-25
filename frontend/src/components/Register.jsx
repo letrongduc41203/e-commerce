@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { register } from '../services/authService';
 
-const titles = ["Ông", "Bà", "Cô", "Anh", "Chị"];
+const titles = ["Mr", "Ms", "Mrs", "Dr"];
 
 export default function Register() {
   const [form, setForm] = useState({

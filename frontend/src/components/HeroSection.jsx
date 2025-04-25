@@ -37,7 +37,8 @@ export function HeroSection() {
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center px-4">{hero.title}</h2>
                     <Link
                         to={hero.buttonLink}
-                        className="mt-4 px-6 py-3 bg-white text-black font-semibold hover:bg-gray-100 transition-colors"
+                        className="mt-6 w-[90%] md:w-[420px] py-4 flex items-center justify-center rounded-full border border-white text-white bg-[rgba(255,255,255,0.07)] font-semibold text-lg tracking-wide shadow-lg backdrop-blur-sm hover:bg-[rgba(255,255,255,0.15)] transition-all duration-200"
+                        style={{ boxShadow: '0 2px 16px 0 rgba(0,0,0,0.10)' }}
                     >
                         {hero.buttonText}
                     </Link>
