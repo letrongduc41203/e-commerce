@@ -26,6 +26,7 @@ import bannerRoutes from './routes/bannerRoutes.js';
 import collectionRoutes from './routes/collectionRoutes.js';
 import giftRoutes from './routes/giftRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 // Sử dụng các route chuẩn hóa
 app.use('/api/users', userRoutes);
@@ -34,6 +35,7 @@ app.use('/api/banners', bannerRoutes);
 app.use('/api/collections', collectionRoutes);
 app.use('/api/gifts', giftRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/orders', orderRoutes);
 
 // MongoDB Models
 

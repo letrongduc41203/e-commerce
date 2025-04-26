@@ -14,6 +14,8 @@ import UserInfo from "./pages/UserInfo.jsx";
 import NewArrHer from "./pages/NewArrHer";
 // import NewArrHim from "./pages/NewArrHim";
 // import Accessories from "./pages/Accessories";
+import MyOrder from "./pages/MyOrder";
+import OrderDetails from "./pages/OrderDetails";
 
 function App() {
     const [user, setUser] = React.useState(() => {
@@ -132,6 +134,8 @@ function App() {
                 <Route path="/new-arrivals-for-her" element={<NewArrHer />} />
                 {/* <Route path="/new-arrivals-for-him" element={<NewArrHim />} /> */}
                 {/* <Route path="/accessories" element={<NewArrHer />} /> */}
+                <Route path="/my-order" element={<MyOrder />} />
+                <Route path="/orders/:orderId" element={<OrderDetails />} />
             </Routes>
             <Footer />
         </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import PaySection from "./PaySection";
 import { login } from '../services/authService';
 
 const Checkout = () => {
@@ -384,7 +385,8 @@ const Checkout = () => {
                                 </div>
                             </div>
                             {/* Thêm form thanh toán tại đây */}
-                            <div style={{ color: '#888' }}>Enjoy free delivery on all orders.</div>
+                            <div className="text-gray-500 italic mb-4">Enjoy free delivery on all orders.</div>
+                            <PaySection cartItems={cartItems} shipping={shipping} />
                         </div>
                     )}
                 </div>

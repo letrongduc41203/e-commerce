@@ -63,9 +63,10 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
 
     return (
         <>
-            <nav className="fixed top-0 left-0 w-full flex justify-between items-center p-4 border-b bg-white z-50">
-                {/* Menu + Search group */}
+            <nav className="fixed top-0 left-0 w-full flex items-center p-4 border-b bg-white z-50">
+                {/* Khối trái: Menu + Search */}
                 <div className="flex items-center gap-4 flex-shrink-0">
+
                     <button
                         className="text-lg flex items-center gap-2"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -83,7 +84,7 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                             <span className="text-lg text-black">Search</span>
                         </button>
                     </div>
-                    {/* Overlay Search UI */}
+                    {/* Overlay Search UI giữ nguyên */}
                     {showSearchOverlay && (
                         <div className="fixed inset-0 z-[999] bg-white flex flex-col items-center px-2 pt-8 animate-fade-in">
                             {/* Close button */}
@@ -94,7 +95,7 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                             >
                                 <X className="w-6 h-6" />
                             </button>
-                          
+
                             {/* Search input */}
                             <div className="w-full max-w-2xl flex items-center border border-gray-300 rounded-full px-4 py-2 mb-4">
                                 <Search className="w-5 h-5 text-gray-400 mr-2" />
@@ -139,10 +140,14 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                         </div>
                     )}
                 </div>
-                
-                <Link to="/" className="text-3xl font-bold">Linea della Vita</Link>
 
-                <div className="flex items-center gap-2 relative">
+                {/* Khối giữa: Logo luôn căn giữa */}
+                <div className="flex-1 flex justify-center">
+                    <Link to="/" className="text-3xl font-bold">Linea della Vita</Link>
+                </div>
+
+                {/* Khối phải: User/Cart/... */}
+                <div className="flex items-center gap-2 flex-shrink-0 relative">
                     {/* Đăng nhập/Đăng xuất */}
                     {user && user.firstName && user.lastName ? (
                         <button
@@ -150,7 +155,7 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                             onClick={() => setShowUserInfo(v => !v)}
                             type="button"
                         >
-                            <span className="font-semibold text-sm cursor-pointer">{user.firstName} {user.lastName}</span>
+                            <span className="font-semibold text-sm cursor-pointer max-w-[80px] truncate block">{user.firstName} {user.lastName}</span>
 
                             {/* Popup nhỏ khi click */}
 
@@ -167,7 +172,10 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                                         >
                                             ACCOUNT SETTINGS
                                         </div>
-                                        <div className="text-left px-5 py-2 font-semibold text-base hover:bg-gray-100 transition cursor-pointer">MY ORDERS</div>
+                                        <div className="text-left px-5 py-2 font-semibold text-base hover:bg-gray-100 transition cursor-pointer"
+                                            onClick={() => { setShowUserInfo(false); navigate('/my-order'); }}>
+                                            MY ORDERS
+                                        </div>
                                     </div>
                                     <hr className="my-3 border-gray-200" />
                                     <button
