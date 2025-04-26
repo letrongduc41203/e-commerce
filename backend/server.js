@@ -27,6 +27,8 @@ import collectionRoutes from './routes/collectionRoutes.js';
 import giftRoutes from './routes/giftRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import Admin from './models/Admin.js';
 
 // Sử dụng các route chuẩn hóa
 app.use('/api/users', userRoutes);
@@ -36,6 +38,7 @@ app.use('/api/collections', collectionRoutes);
 app.use('/api/gifts', giftRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/admin', adminRoutes);
 
 // MongoDB Models
 
@@ -56,7 +59,20 @@ app.get('/test-pg', async (req, res) => {
 });
 
 // Start the server
+// Khởi tạo bảng admin khi server khởi động
+const initializeAdmin = async () => {
+  try {
+    await Admin.createAdminTable();
+    console.log('✅ Admin table initialized successfully');
+  } catch (error) {
+    console.error('❌ Error initializing admin table:', error);
+  }
+};
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  
+  // Khởi tạo bảng admin và tài khoản admin mặc định
+  initializeAdmin();
 });
 

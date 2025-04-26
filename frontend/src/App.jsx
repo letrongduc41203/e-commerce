@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation, Link } from 'react-router-dom';
+import { Routes, Route, useLocation, Link, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import Home from './pages/Home.jsx';
@@ -16,6 +16,15 @@ import NewArrHer from "./pages/NewArrHer";
 // import Accessories from "./pages/Accessories";
 import MyOrder from "./pages/MyOrder";
 import OrderDetails from "./pages/OrderDetails";
+
+// Admin imports
+import AdminLayout from './pages/admin/AdminLayout';
+import AdminLogin from './pages/admin/AdminLogin';
+import Dashboard from './pages/admin/Dashboard';
+import OrderManagement from './pages/admin/OrderManagement';
+import AdminOrderDetails from './pages/admin/OrderDetails';
+import ProductManagement from './pages/admin/ProductManagement';
+import ProductForm from './pages/admin/ProductForm';
 
 function App() {
     const [user, setUser] = React.useState(() => {
@@ -136,6 +145,24 @@ function App() {
                 {/* <Route path="/accessories" element={<NewArrHer />} /> */}
                 <Route path="/my-order" element={<MyOrder />} />
                 <Route path="/orders/:orderId" element={<OrderDetails />} />
+                
+                {/* Admin Login Route */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                
+                {/* Admin Routes (Protected) */}
+                <Route path="/admin" element={<AdminLayout />}>
+                    <Route index element={<Dashboard />} />
+                    <Route path="orders" element={<OrderManagement />} />
+                    <Route path="orders/:id" element={<AdminOrderDetails />} />
+                    <Route path="orders/pending" element={<OrderManagement />} />
+                    <Route path="orders/completed" element={<OrderManagement />} />
+                    <Route path="products" element={<ProductManagement />} />
+                    <Route path="products/add" element={<ProductForm />} />
+                    <Route path="products/edit/:id" element={<ProductForm />} />
+                    <Route path="products/categories" element={<Navigate to="/admin/products" />} />
+                    <Route path="users" element={<Navigate to="/admin" />} />
+                    <Route path="settings" element={<Navigate to="/admin" />} />
+                </Route>
             </Routes>
             <Footer />
         </div>
