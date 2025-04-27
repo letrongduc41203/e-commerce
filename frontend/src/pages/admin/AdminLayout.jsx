@@ -125,19 +125,8 @@ const AdminLayout = () => {
         { id: 'add-product', label: 'Thêm sản phẩm mới', path: '/admin/products/add' },
         { id: 'categories', label: 'Danh mục', path: '/admin/products/categories' }
       ]
-    },
-    {
-      id: 'users',
-      label: 'Quản lý người dùng',
-      icon: <User size={18} />,
-      path: '/admin/users'
-    },
-    {
-      id: 'settings',
-      label: 'Cài đặt',
-      icon: <Settings size={18} />,
-      path: '/admin/settings'
     }
+
   ];
 
   if (!user) {

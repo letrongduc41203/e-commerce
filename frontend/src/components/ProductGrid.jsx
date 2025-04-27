@@ -13,9 +13,10 @@ export function ProductGrid() {
         import('../services/api/productApi').then(({ fetchProducts }) => {
             fetchProducts()
                 .then(data => {
-                    setProducts(data);
+                    console.log('data from API:', data);
+                    setProducts(data.products); // hoặc data.data, tùy vào cấu trúc thực tế
                     setLoading(false);
-                    setCenterIndex(data.length > 1 ? 1 : 0);
+                    setCenterIndex(data.products && data.products.length > 1 ? 1 : 0);
                 })
                 .catch(err => {
                     setError(err.message);
@@ -26,6 +27,7 @@ export function ProductGrid() {
 
     if (loading) return <div className="p-8">Đang tải sản phẩm...</div>;
     if (error) return <div className="p-8 text-red-500">Lỗi: {error}</div>;
+    console.log('products:', products);
     if (!products.length) return <div className="p-8">Không có sản phẩm nào.</div>;
 
     // Tính toán 3 sản phẩm hiển thị: trước, giữa, sau

@@ -40,7 +40,7 @@ export function Footer() {
                     </div>
                 </div>
                 <div className="mt-12 border-t border-gray-700 pt-8">
-                    <p className="text-center text-2xl font-bold mb-6 mt-2">LOUIS VUITTON</p>
+                    <p className="text-center text-2xl font-bold mb-6 mt-2">Linea della Vita</p>
                 </div>
             </div>
         </footer>

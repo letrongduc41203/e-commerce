@@ -28,7 +28,7 @@ const OrderDetails = () => {
       try {
         setLoading(true);
         
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('admin_token');
         if (!token) {
           throw new Error('No auth token found');
         }
@@ -42,7 +42,7 @@ const OrderDetails = () => {
         setOrder(response.data);
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching order details:', err);
+        console.error('Error fetching order details:', err, err.response?.data);
         setError('Không thể tải thông tin đơn hàng. Vui lòng thử lại sau.');
         setLoading(false);
       }
@@ -55,7 +55,7 @@ const OrderDetails = () => {
     try {
       setUpdatingStatus(true);
       
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('admin_token');
       if (!token) {
         throw new Error('No auth token found');
       }

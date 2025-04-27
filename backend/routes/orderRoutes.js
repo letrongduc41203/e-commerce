@@ -7,7 +7,7 @@ const router = express.Router();
 // Admin middleware - kiểm tra xem user có phải admin không
 const isAdmin = async (req, res, next) => {
   try {
-    if (!req.user || !req.user.isAdmin) {
+    if (!req.user || !(req.user.role === 'admin' || req.user.isSuperAdmin === true)) {
       return res.status(403).json({ message: 'Access denied. Admin only.' });
     }
     next();
@@ -16,7 +16,6 @@ const isAdmin = async (req, res, next) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
 // Create a new order
 router.post('/', auth, async (req, res) => {
   try {

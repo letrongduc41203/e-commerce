@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, 
-         PieChart, Pie, Cell } from 'recharts';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  PieChart, Pie, Cell
+} from 'recharts';
 import { getUserOrders } from '../../services/orderService';
 import { Package, ShoppingCart, DollarSign, Users } from 'lucide-react';
 
@@ -23,25 +25,25 @@ const Dashboard = () => {
     const fetchStats = async () => {
       try {
         setLoading(true);
-        
+
         // Fetch orders
         const ordersData = await getUserOrders();
-        
+
         // Tính toán thống kê từ dữ liệu
         const totalOrders = ordersData.length;
         const pendingOrders = ordersData.filter(order => order.status === 'Pending').length;
         const processingOrders = ordersData.filter(order => ['Processing', 'Shipped'].includes(order.status)).length;
         const completedOrders = ordersData.filter(order => order.status === 'Delivered').length;
-        
+
         // Tính tổng doanh thu
-        const totalRevenue = ordersData.reduce((sum, order) => 
+        const totalRevenue = ordersData.reduce((sum, order) =>
           order.status !== 'Cancelled' ? sum + order.totalAmount : sum, 0);
-        
+
         // Lấy 5 đơn hàng gần nhất
         const recentOrders = [...ordersData]
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 5);
-          
+
         setStats({
           totalOrders,
           pendingOrders,
@@ -50,7 +52,7 @@ const Dashboard = () => {
           totalRevenue,
           recentOrders
         });
-        
+
         setLoading(false);
       } catch (err) {
         console.error('Error fetching dashboard data:', err);
@@ -58,7 +60,7 @@ const Dashboard = () => {
         setLoading(false);
       }
     };
-    
+
     fetchStats();
   }, []);
 
@@ -113,7 +115,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Dashboard</h1>
-      
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white rounded-lg shadow p-6 flex">
@@ -125,7 +127,7 @@ const Dashboard = () => {
             <p className="text-2xl font-bold">{stats.totalOrders}</p>
           </div>
         </div>
-        
+
         <div className="bg-white rounded-lg shadow p-6 flex">
           <div className="bg-green-100 rounded-full p-3 mr-4">
             <Package className="text-green-600" size={24} />
@@ -135,7 +137,7 @@ const Dashboard = () => {
             <p className="text-2xl font-bold">{stats.completedOrders}</p>
           </div>
         </div>
-        
+
         <div className="bg-white rounded-lg shadow p-6 flex">
           <div className="bg-yellow-100 rounded-full p-3 mr-4">
             <Package className="text-yellow-600" size={24} />
@@ -145,7 +147,7 @@ const Dashboard = () => {
             <p className="text-2xl font-bold">{stats.pendingOrders + stats.processingOrders}</p>
           </div>
         </div>
-        
+
         <div className="bg-white rounded-lg shadow p-6 flex">
           <div className="bg-indigo-100 rounded-full p-3 mr-4">
             <DollarSign className="text-indigo-600" size={24} />
@@ -156,7 +158,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Orders by Status */}
@@ -185,7 +187,7 @@ const Dashboard = () => {
             </ResponsiveContainer>
           </div>
         </div>
-        
+
         {/* Monthly Revenue */}
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-lg font-semibold mb-4">Doanh thu theo tháng</h2>
@@ -202,7 +204,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Recent Orders */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="p-6 border-b">
@@ -237,15 +239,14 @@ const Dashboard = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          order.status === 'Delivered'
+                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.status === 'Delivered'
                             ? 'bg-green-100 text-green-800'
                             : order.status === 'Cancelled'
-                            ? 'bg-red-100 text-red-800'
-                            : order.status === 'Shipped'
-                            ? 'bg-blue-100 text-blue-800'
-                            : 'bg-yellow-100 text-yellow-800'
-                        }`}
+                              ? 'bg-red-100 text-red-800'
+                              : order.status === 'Shipped'
+                                ? 'bg-blue-100 text-blue-800'
+                                : 'bg-yellow-100 text-yellow-800'
+                          }`}
                       >
                         {order.status}
                       </span>

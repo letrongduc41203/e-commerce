@@ -160,8 +160,6 @@ function App() {
                     <Route path="products/add" element={<ProductForm />} />
                     <Route path="products/edit/:id" element={<ProductForm />} />
                     <Route path="products/categories" element={<Navigate to="/admin/products" />} />
-                    <Route path="users" element={<Navigate to="/admin" />} />
-                    <Route path="settings" element={<Navigate to="/admin" />} />
                 </Route>
             </Routes>
             <Footer />

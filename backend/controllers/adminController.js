@@ -51,10 +51,11 @@ export const loginAdmin = async (req, res) => {
       { 
         id: admin.id, 
         username: admin.username, 
+        email: admin.email, 
         role: admin.role,
         isSuperAdmin: admin.is_super_admin 
       },
-      process.env.JWT_SECRET || 'admin-secret-key',
+      process.env.JWT_SECRET || 'fendiman_412',
       { expiresIn: '1d' }
     );
 

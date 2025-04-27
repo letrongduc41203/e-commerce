@@ -38,7 +38,7 @@ const OrderManagement = () => {
       try {
         setLoading(true);
         
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('admin_token') || localStorage.getItem('token');
         if (!token) {
           throw new Error('No auth token found');
         }
@@ -124,7 +124,7 @@ const OrderManagement = () => {
   // Update order status
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('admin_token') || localStorage.getItem('token');
       if (!token) {
         throw new Error('No auth token found');
       }
