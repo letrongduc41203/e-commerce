@@ -26,6 +26,10 @@ import AdminOrderDetails from './pages/admin/OrderDetails';
 import ProductManagement from './pages/admin/ProductManagement';
 import ProductForm from './pages/admin/ProductForm';
 
+function isAdminRoute(pathname) {
+    return pathname.startsWith('/admin');
+}
+
 function App() {
     const [user, setUser] = React.useState(() => {
         const saved = localStorage.getItem('lv_user');
@@ -145,10 +149,10 @@ function App() {
                 {/* <Route path="/accessories" element={<NewArrHer />} /> */}
                 <Route path="/my-order" element={<MyOrder />} />
                 <Route path="/orders/:orderId" element={<OrderDetails />} />
-                
+
                 {/* Admin Login Route */}
                 <Route path="/admin/login" element={<AdminLogin />} />
-                
+
                 {/* Admin Routes (Protected) */}
                 <Route path="/admin" element={<AdminLayout />}>
                     <Route index element={<Dashboard />} />
@@ -162,7 +166,7 @@ function App() {
                     <Route path="products/categories" element={<Navigate to="/admin/products" />} />
                 </Route>
             </Routes>
-            <Footer />
+            {!isAdminRoute(location.pathname) && <Footer />}
         </div>
     );
 }

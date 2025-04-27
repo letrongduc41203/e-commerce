@@ -51,8 +51,6 @@ const Collections = () => {
             {/* Products Grid */}
 
             <div className="w-full px-0">
-                {/* Layout 2 cột: ảnh + sản phẩm 2x2 */}
-
                 {/* Thêm 2 hàng sản phẩm, không trùng dữ liệu */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 mt-4">
                   {collection.products.slice(4, 12).map((product) => (

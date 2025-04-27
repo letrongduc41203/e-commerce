@@ -384,7 +384,7 @@ const Checkout = () => {
                                     <div><span className="font-medium">Phone:</span> ({shipping.phoneCode ? shipping.phoneCode.toUpperCase() : ''}) {shipping.phone || '-'}</div>
                                 </div>
                             </div>
-                            {/* Thêm form thanh toán tại đây */}
+                            {/* form thanh toán */}
                             <div className="text-gray-500 italic mb-4">Enjoy free delivery on all orders.</div>
                             <PaySection cartItems={cartItems} shipping={shipping} />
                         </div>
