@@ -16,6 +16,7 @@ import NewArrHer from "./pages/NewArrHer";
 // import Accessories from "./pages/Accessories";
 import MyOrder from "./pages/MyOrder";
 import OrderDetails from "./pages/OrderDetails";
+import Men from "./pages/men";
 
 // Admin imports
 import AdminLayout from './pages/admin/AdminLayout';
@@ -149,6 +150,7 @@ function App() {
                 {/* <Route path="/accessories" element={<NewArrHer />} /> */}
                 <Route path="/my-order" element={<MyOrder />} />
                 <Route path="/orders/:orderId" element={<OrderDetails />} />
+                <Route path="/men" element={<Men />} />
 
                 {/* Admin Login Route */}
                 <Route path="/admin/login" element={<AdminLogin />} />

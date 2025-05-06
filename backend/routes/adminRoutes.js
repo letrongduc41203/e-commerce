@@ -7,6 +7,12 @@ const router = express.Router();
 // Route đăng nhập admin
 router.post('/login', adminController.loginAdmin);
 
+// Route làm mới token
+router.post('/refresh-token', adminController.refreshToken);
+
+// Route đăng xuất
+router.post('/logout', adminController.logoutAdmin);
+
 // Routes yêu cầu xác thực admin
 router.use(authenticateAdmin);
 

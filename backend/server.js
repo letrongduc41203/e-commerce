@@ -28,6 +28,7 @@ import giftRoutes from './routes/giftRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import menRoutes from './routes/men.js';
 import Admin from './models/Admin.js';
 
 // Sử dụng các route chuẩn hóa
@@ -39,6 +40,7 @@ app.use('/api/gifts', giftRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/men', menRoutes);
 
 // MongoDB Models
 
@@ -63,9 +65,10 @@ app.get('/test-pg', async (req, res) => {
 const initializeAdmin = async () => {
   try {
     await Admin.createAdminTable();
-    console.log('✅ Admin table initialized successfully');
+    await Admin.createRefreshTokenTable();
+    console.log('✅ Admin and refresh token tables initialized successfully');
   } catch (error) {
-    console.error('❌ Error initializing admin table:', error);
+    console.error('❌ Error initializing admin tables:', error);
   }
 };
 

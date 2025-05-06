@@ -256,7 +256,7 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                             key={item.id}
                             to={item.path}
                             className={`block text-lg font-bold transition-all duration-200
-                                ${hoveredId === item.id ? 'font-bold underline' :
+                                ${hoveredId === item.id ? 'font-bold' :
                                     hoveredId ? 'opacity-50' : ''}
                             `}
                             onMouseEnter={() => setHoveredId(item.id)}

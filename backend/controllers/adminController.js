@@ -1,6 +1,43 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import Admin from '../models/Admin.js';
+import crypto from 'crypto'; // Thêm module crypto để tạo token ngẫu nhiên
+
+// Hằng số cho refresh token
+const REFRESH_TOKEN_EXPIRES_IN = '7d'; // Refresh token có hạn 7 ngày
+const ACCESS_TOKEN_EXPIRES_IN = '15m'; // Access token có hạn 15 phút
+
+// Tạo access token
+const generateAccessToken = (admin) => {
+  const payload = { 
+    id: admin.id, 
+    username: admin.username, 
+    email: admin.email, 
+    role: admin.role,
+    isSuperAdmin: admin.is_super_admin 
+  };
+  const secret = process.env.JWT_SECRET || 'admin-secret-key';
+  const options = { expiresIn: ACCESS_TOKEN_EXPIRES_IN };
+  
+  console.log('Creating access token with payload:', {
+    id: payload.id,
+    username: payload.username
+  });
+  
+  try {
+    const token = jwt.sign(payload, secret, options);
+    console.log('Token created successfully:', token.substring(0, 15) + '...');
+    return token;
+  } catch (error) {
+    console.error('Error creating token:', error);
+    throw error;
+  }
+};
+
+// Tạo refresh token ngẫu nhiên
+const generateRefreshToken = () => {
+  return crypto.randomBytes(40).toString('hex');
+};
 
 // Xử lý đăng nhập cho admin
 export const loginAdmin = async (req, res) => {
@@ -46,18 +83,25 @@ export const loginAdmin = async (req, res) => {
     // Cập nhật thời gian đăng nhập cuối
     await Admin.updateLastLogin(admin.id);
 
-    // Tạo JWT token
-    const token = jwt.sign(
-      { 
-        id: admin.id, 
-        username: admin.username, 
-        email: admin.email, 
-        role: admin.role,
-        isSuperAdmin: admin.is_super_admin 
-      },
-      process.env.JWT_SECRET || 'fendiman_412',
-      { expiresIn: '1d' }
+    // Tạo access token và refresh token
+    const accessToken = generateAccessToken(admin);
+    const refreshToken = generateRefreshToken();
+    
+    // Tính thời gian hết hạn cho refresh token
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7); // Hết hạn sau 7 ngày
+    
+    // Lưu refresh token vào database
+    await Admin.saveRefreshToken(
+      admin.id, 
+      refreshToken, 
+      expiresAt, 
+      req.headers['user-agent'] || '', 
+      req.ip
     );
+    
+    // Xóa các token hết hạn
+    await Admin.deleteExpiredRefreshTokens();
 
     // Gửi về thông tin admin (không bao gồm mật khẩu) và token
     res.status(200).json({
@@ -72,7 +116,8 @@ export const loginAdmin = async (req, res) => {
         role: admin.role,
         isSuperAdmin: admin.is_super_admin
       },
-      token
+      accessToken,
+      refreshToken
     });
   } catch (error) {
     console.error('Error in admin login:', error);
@@ -80,6 +125,104 @@ export const loginAdmin = async (req, res) => {
       success: false, 
       message: 'Lỗi server', 
       error: error.message 
+    });
+  }
+};
+
+// Làm mới token
+export const refreshToken = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+    
+    if (!refreshToken) {
+      return res.status(400).json({
+        success: false,
+        message: 'Refresh token không được cung cấp'
+      });
+    }
+    
+    // Tìm refresh token trong database
+    const tokenDoc = await Admin.findRefreshToken(refreshToken);
+    
+    if (!tokenDoc) {
+      return res.status(401).json({
+        success: false,
+        message: 'Refresh token không hợp lệ hoặc đã hết hạn'
+      });
+    }
+    
+    // Kiểm tra token có hết hạn chưa
+    if (new Date(tokenDoc.expires_at) < new Date()) {
+      // Vô hiệu hóa token đã hết hạn
+      await Admin.revokeRefreshToken(refreshToken);
+      
+      return res.status(401).json({
+        success: false,
+        message: 'Refresh token đã hết hạn, vui lòng đăng nhập lại'
+      });
+    }
+    
+    // Kiểm tra trạng thái tài khoản admin
+    if (tokenDoc.status !== 'active') {
+      return res.status(401).json({
+        success: false,
+        message: 'Tài khoản đã bị khóa hoặc vô hiệu hóa'
+      });
+    }
+    
+    // Lấy thông tin admin
+    const admin = await Admin.findAdminById(tokenDoc.admin_id);
+    
+    if (!admin) {
+      return res.status(401).json({
+        success: false,
+        message: 'Không tìm thấy thông tin admin'
+      });
+    }
+    
+    // Tạo access token mới
+    const accessToken = generateAccessToken(admin);
+    
+    // Trả về access token mới
+    res.status(200).json({
+      success: true,
+      accessToken
+    });
+  } catch (error) {
+    console.error('Error refreshing token:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Lỗi server',
+      error: error.message
+    });
+  }
+};
+
+// Đăng xuất
+export const logoutAdmin = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+    
+    if (!refreshToken) {
+      return res.status(400).json({
+        success: false,
+        message: 'Refresh token không được cung cấp'
+      });
+    }
+    
+    // Vô hiệu hóa refresh token
+    await Admin.revokeRefreshToken(refreshToken);
+    
+    res.status(200).json({
+      success: true,
+      message: 'Đăng xuất thành công'
+    });
+  } catch (error) {
+    console.error('Error logging out admin:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Lỗi server',
+      error: error.message
     });
   }
 };
@@ -327,5 +470,7 @@ export default {
   changePassword,
   getAllAdmins,
   createAdmin,
-  deleteAdmin
+  deleteAdmin,
+  refreshToken,
+  logoutAdmin
 };

@@ -4,7 +4,7 @@ export const banners = {
         description: "Khám phá những thiết kế mới nhất từ Louis Vuitton",
         image: "/src/assets/images/banner/HeroSection.webp",
         buttonText: "Khám phá ngay",
-        buttonLink: "/collections/spring-summer-2025"
+        buttonLink: "/collections/spring-summer-2025-for-women"
     },
     featured: [
         {

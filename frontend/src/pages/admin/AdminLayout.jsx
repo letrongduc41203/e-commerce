@@ -11,6 +11,8 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
+import adminAuthService from '../../services/adminAuthService';
+import adminApi from '../../services/api/adminApi';
 
 const AdminLayout = () => {
   const navigate = useNavigate();
@@ -20,50 +22,57 @@ const AdminLayout = () => {
   const [isSubmenuOpen, setIsSubmenuOpen] = useState({});
 
   useEffect(() => {
-    // Lấy thông tin admin từ localStorage
-    const adminData = localStorage.getItem('admin_data');
-    const adminToken = localStorage.getItem('admin_token');
-
-    // Kiểm tra có thông tin admin và token không
-    if (!adminData || !adminToken) {
-      // Nếu không có thông tin admin, chuyển về trang admin login
+    // Kiểm tra đăng nhập
+    const isLoggedIn = adminAuthService.isLoggedIn();
+    console.log('Checking login status:', isLoggedIn);
+    
+    if (!isLoggedIn) {
+      console.log('Not logged in, redirecting to login page');
       navigate('/admin/login');
       return;
     }
 
-    const parsedAdmin = JSON.parse(adminData);
-    setUser(parsedAdmin);
+    // Lấy thông tin admin
+    const adminData = adminAuthService.getAdminData();
+    setUser(adminData);
+    
+    // Hiển thị token debug
+    const token = adminAuthService.getAccessToken();
+    if (token) {
+      console.log('Current token:', token.substring(0, 10) + '...');
+    }
     
     // Kiểm tra token còn hạn không bằng cách gọi API /admin/me
     const validateToken = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/admin/me', {
-          headers: {
-            Authorization: `Bearer ${adminToken}`
-          }
-        });
+        console.log('Validating token with API...');
+        const response = await adminApi.get('/admin/me');
         
-        if (!response.ok) {
-          throw new Error('Token không hợp lệ hoặc đã hết hạn');
-        }
-        
-        // Cập nhật thông tin admin mới nhất
-        const data = await response.json();
-        if (data.success) {
-          localStorage.setItem('admin_data', JSON.stringify(data.admin));
-          setUser(data.admin);
+        if (response.data.success) {
+          console.log('Token validation successful');
+          // Cập nhật thông tin admin mới nhất
+          localStorage.setItem('admin_data', JSON.stringify(response.data.admin));
+          setUser(response.data.admin);
         }
       } catch (error) {
         console.error('Lỗi xác thực admin:', error);
-        // Xóa thông tin admin không hợp lệ
-        localStorage.removeItem('admin_data');
-        localStorage.removeItem('admin_token');
-        // Chuyển hướng về trang đăng nhập admin
-        navigate('/admin/login');
+        // Lỗi xác thực sẽ được xử lý bởi interceptor
       }
     };
     
     validateToken();
+
+    // Thêm listener cho sự kiện logout
+    const handleAuthLogout = (event) => {
+      adminAuthService.clearAuthData();
+      navigate('/admin/login');
+    };
+    
+    window.addEventListener('auth:logout', handleAuthLogout);
+    
+    return () => {
+      window.removeEventListener('auth:logout', handleAuthLogout);
+    };
   }, [navigate]);
 
   // Toggle submenu
@@ -88,12 +97,15 @@ const AdminLayout = () => {
   };
 
   // Xử lý logout
-  const handleLogout = () => {
-    // Xóa thông tin admin khỏi localStorage
-    localStorage.removeItem('admin_data');
-    localStorage.removeItem('admin_token');
-    // Chuyển về trang admin login
-    navigate('/admin/login');
+  const handleLogout = async () => {
+    try {
+      await adminAuthService.logout();
+      navigate('/admin/login');
+    } catch (error) {
+      console.error('Lỗi đăng xuất:', error);
+      // Vẫn chuyển về trang đăng nhập ngay cả khi có lỗi
+      navigate('/admin/login');
+    }
   };
 
   // Menu items admin

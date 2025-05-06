@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import Admin from '../models/Admin.js';
 
 // Middleware xác thực JWT token cho admin
+// Access token có hạn ngắn (15 phút), cần refresh token để làm mới
 export const authenticateAdmin = async (req, res, next) => {
   try {
     let token;
@@ -9,6 +10,7 @@ export const authenticateAdmin = async (req, res, next) => {
     // Lấy token từ header Authorization
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
+      console.log('Token from header:', token ? token.substring(0, 10) + '...' : 'No token');
     }
     
     // Nếu không có token
@@ -20,35 +22,41 @@ export const authenticateAdmin = async (req, res, next) => {
     }
     
     // Xác thực token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'admin-secret-key');
-    
-    // Kiểm tra admin có tồn tại không
-    const admin = await Admin.findAdminById(decoded.id);
-    
-    if (!admin) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Admin không tồn tại hoặc token không hợp lệ' 
-      });
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'admin-secret-key');
+      console.log('Token decoded successfully');
+      
+      // Kiểm tra admin có tồn tại không
+      const admin = await Admin.findAdminById(decoded.id);
+      
+      if (!admin) {
+        return res.status(401).json({ 
+          success: false, 
+          message: 'Admin không tồn tại hoặc token không hợp lệ' 
+        });
+      }
+      
+      // Kiểm tra trạng thái tài khoản
+      if (admin.status !== 'active') {
+        return res.status(401).json({ 
+          success: false, 
+          message: 'Tài khoản đã bị khóa hoặc vô hiệu hóa' 
+        });
+      }
+      
+      // Thêm thông tin admin vào request
+      req.admin = {
+        id: admin.id,
+        username: admin.username,
+        role: admin.role,
+        isSuperAdmin: admin.is_super_admin
+      };
+      
+      next();
+    } catch (jwtError) {
+      console.error('JWT verification error:', jwtError.message);
+      throw jwtError;
     }
-    
-    // Kiểm tra trạng thái tài khoản
-    if (admin.status !== 'active') {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Tài khoản đã bị khóa hoặc vô hiệu hóa' 
-      });
-    }
-    
-    // Thêm thông tin admin vào request
-    req.admin = {
-      id: admin.id,
-      username: admin.username,
-      role: admin.role,
-      isSuperAdmin: admin.is_super_admin
-    };
-    
-    next();
   } catch (error) {
     console.error('Admin auth error:', error);
     
@@ -62,7 +70,8 @@ export const authenticateAdmin = async (req, res, next) => {
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({ 
         success: false, 
-        message: 'Token đã hết hạn' 
+        message: 'Token đã hết hạn, vui lòng làm mới token', 
+        code: 'TOKEN_EXPIRED'
       });
     }
     

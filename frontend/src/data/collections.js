@@ -1,8 +1,9 @@
 export const collections = [
     {
         id: 1,
-        name: 'Bộ sưu tập Xuân Hè 2025',
-        slug: 'spring-summer-2025',
+        name: 'Bộ sưu tập Xuân-Hè 2025 dành cho nữ',
+        description: 'Bộ sưu tập Xuân-Hè 2025 dành cho Nữ của Nicolas Ghesquière mở ra một cuộc đối thoại tinh tế về sắc thái đối lập giữa sự mềm mại và phom dáng cấu trúc. Lisa và Saoirse Ronan, trong vai trò Đại sứ thương hiệu, xuất hiện như một bức chân dung sống động trong thế giới hội họa của Laurent Grasso qua chiến dịch quảng bá mới.',
+        slug: 'spring-summer-2025-for-women',
         banner: '/src/assets/images/banner/bannerLisa.jpeg',
         modelImage: '/src/assets/images/banner/W_BC_SPRINGSUMMER Lisa.jpg',
         products: [

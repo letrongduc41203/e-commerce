@@ -22,19 +22,35 @@ export default function ProductDetail({ addToCart }) {
   const [error, setError] = useState(null);
 
   React.useEffect(() => {
-    // Lấy tất cả collections, tìm sản phẩm theo id
-    fetch('http://localhost:5000/api/collections')
-      .then(res => {
+    // Lấy cả hai API: collections và mens
+    Promise.all([
+      fetch('http://localhost:5000/api/collections').then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      }),
+      fetch('http://localhost:5000/api/men').then(res => {
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
       })
-      .then(data => {
+    ])
+      .then(([collections, mens]) => {
         let found = null, name = '';
-        for (const collection of data) {
+        // Tìm trong collections
+        for (const collection of collections) {
           found = (collection.products || []).find((p) => String(p.id) === String(id));
           if (found) {
             name = collection.name;
             break;
+          }
+        }
+        // Nếu chưa thấy, tìm tiếp trong mens
+        if (!found) {
+          for (const menCollection of mens) {
+            found = (menCollection.products || []).find((p) => String(p.id) === String(id));
+            if (found) {
+              name = menCollection.name;
+              break;
+            }
           }
         }
         setProduct(found);

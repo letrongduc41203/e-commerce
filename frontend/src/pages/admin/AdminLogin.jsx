@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, LogIn, AlertCircle } from 'lucide-react';
-import axios from 'axios';
-
-const API_URL = 'http://localhost:5000/api';
+import adminAuthService from '../../services/adminAuthService';
 
 const AdminLogin = () => {
   const [credentials, setCredentials] = useState({
@@ -19,16 +17,9 @@ const AdminLogin = () => {
 
   useEffect(() => {
     // Kiểm tra nếu đã đăng nhập thì chuyển hướng đến dashboard
-    const checkLoggedIn = () => {
-      const adminData = localStorage.getItem('admin_data');
-      const adminToken = localStorage.getItem('admin_token');
-      
-      if (adminData && adminToken) {
-        navigate('/admin');
-      }
-    };
-    
-    checkLoggedIn();
+    if (adminAuthService.isLoggedIn()) {
+      navigate('/admin');
+    }
   }, [navigate]);
 
   const handleChange = (e) => {
@@ -77,22 +68,23 @@ const AdminLogin = () => {
     try {
       setLoading(true);
       
-      const response = await axios.post(`${API_URL}/admin/login`, credentials);
+      const result = await adminAuthService.login(credentials.username, credentials.password);
       
-      // Lưu thông tin admin và token vào localStorage
-      localStorage.setItem('admin_data', JSON.stringify(response.data.admin));
-      localStorage.setItem('admin_token', response.data.token);
-      
-      // Chuyển hướng đến trang dashboard
-      navigate('/admin');
+      if (result.success) {
+        console.log('Login successful');
+        
+        // Debug: Kiểm tra token
+        const storedToken = localStorage.getItem('admin_token');
+        console.log('Stored token:', storedToken ? storedToken.substring(0, 10) + '...' : 'No token');
+        
+        // Chuyển hướng đến trang dashboard
+        navigate('/admin');
+      } else {
+        setLoginError(result.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
+      }
     } catch (error) {
       console.error('Login error:', error);
-      
-      if (error.response && error.response.data) {
-        setLoginError(error.response.data.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
-      } else {
-        setLoginError('Đã xảy ra lỗi khi kết nối đến máy chủ.');
-      }
+      setLoginError('Đã xảy ra lỗi khi kết nối đến máy chủ.');
     } finally {
       setLoading(false);
     }

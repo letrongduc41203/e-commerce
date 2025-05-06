@@ -7,6 +7,8 @@ import { banners } from '../frontend/src/data/banners.js';
 import { collections } from '../frontend/src/data/collections.js';
 import { products } from '../frontend/src/data/products.js';
 import Gift from './models/Gift.js';
+import { men } from '../frontend/src/data/men.js';
+import Men from './models/Men.js';
 
 dotenv.config();
 
@@ -37,27 +39,33 @@ async function importAllData() {
   await mongoose.connect(MONGO_URI);
 
   // Import banners (chỉ 1 bản ghi, có thể update hoặc replace)
-  await Banner.deleteMany({});
-  await Banner.create(banners);
-  console.log('Đã import banners!');
+  // await Banner.deleteMany({});
+  // await Banner.create(banners);
+  // console.log('Đã import banners!');
 
-  // Import collections (nhiều bản ghi)
-  await Collection.deleteMany({});
-  await Collection.insertMany(collections);
-  console.log('Đã import collections!');
+  // // Import collections (nhiều bản ghi)
+  // await Collection.deleteMany({});
+  // await Collection.insertMany(collections);
+  // console.log('Đã import collections!');
 
-  // Import products (nhiều bản ghi)
-  await Product.deleteMany({});
-  await Product.insertMany(products);
-  console.log('Đã import products!');
+  // // Import products (nhiều bản ghi)
+  // await Product.deleteMany({});
+  // await Product.insertMany(products);
+  // console.log('Đã import products!');
 
-  // Import gifts
-  await Gift.deleteMany({});
-  await Gift.insertMany(gifts.map(image => ({ image })));
-  console.log('Đã import gifts!');
+  // // Import gifts
+  // await Gift.deleteMany({});
+  // await Gift.insertMany(gifts.map(image => ({ image })));
+  // console.log('Đã import gifts!');
 
-  await mongoose.disconnect();
-  console.log('Import tất cả dữ liệu thành công!');
+  // await mongoose.disconnect();
+  // console.log('Import tất cả dữ liệu thành công!');
+
+  // Import men
+  await Men.deleteMany({});
+  await Men.insertMany(men);
+  console.log('Đã import men!');
 }
+
 
 importAllData().catch(e => { console.error(e); process.exit(1); });

@@ -2,7 +2,6 @@ import express from 'express';
 import { body } from 'express-validator';
 import auth from '../middleware/auth.js';
 import validateRequest from '../middleware/validateRequest.js';
-// TODO: Implement createCollection, updateCollection, deleteCollection in collectionController.js
 import { getCollections } from '../controllers/collectionController.js';
 
 const router = express.Router();
