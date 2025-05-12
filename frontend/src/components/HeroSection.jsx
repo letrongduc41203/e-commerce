@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { banners } from '../data/banners'; // Đã chuyển sang lấy từ API MongoDB
 
 export function HeroSection() {
     const [hero, setHero] = React.useState(null);

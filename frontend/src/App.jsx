@@ -116,7 +116,7 @@ function App() {
     const location = useLocation();
     const SimpleNavbar = () => (
         <nav className="w-full h-14 flex items-center px-6 border-b bg-white">
-            <Link to="/" className="text-xl font-bold tracking-widest">LOUIS VUITTON</Link>
+            <Link to="/" className="text-xl font-bold tracking-widest">Linea della Vita</Link>
         </nav>
     );
 
@@ -151,6 +151,8 @@ function App() {
                 <Route path="/my-order" element={<MyOrder />} />
                 <Route path="/orders/:orderId" element={<OrderDetails />} />
                 <Route path="/men" element={<Men />} />
+                {/* <Route path="/women" element={<Women />} /> */}
+           
 
                 {/* Admin Login Route */}
                 <Route path="/admin/login" element={<AdminLogin />} />

@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react"; // Nếu bạn dùng react-icons thì đổi import phù hợp
+import { Eye, EyeOff, CreditCard, FileUser, Mail, Heart } from "lucide-react";
 import { login } from '../services/authService';
 
 const benefits = [
   {
-    icon: "\uD83D\uDCB3", // 🛒
-    text: "Theo dõi đơn hàng, bảo dưỡng sản phẩm và hóa đơn"
+    icon: <CreditCard />,
+    text: "Theo dõi đơn hàng, bảo hành sản phẩm và hóa đơn"
   },
   {
-    icon: "\uD83D\uDCBC", // 💼
+    icon: <FileUser />,
     text: "Quản lý thông tin cá nhân của bạn"
   },
   {
-    icon: "\uD83D\uDCE7", // 📧
+    icon: <Mail />,
     text: "Nhận tin tức đến từ Louis Vuitton"
   },
   {
-    icon: "\u2665\uFE0F", // ❤️
+    icon: <Heart />,
     text: "Tạo danh sách yêu thích, xem các sản phẩm và chia sẻ"
   }
 ];

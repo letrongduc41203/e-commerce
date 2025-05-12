@@ -39,13 +39,15 @@ const Collections = () => {
                     alt={collection.name}
                     className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-0 left-0 p-8 text-left">
-                    <h1 className="text-4xl font-bold text-black">
-                        {collection.name}
-                    </h1>
-                    <p className="mt-2 text-lg text-black">
-                        {collection.description}
-                    </p>
+                <div className="absolute bottom-0 left-0 flex items-end h-full w-full">
+                    <div className="rounded-lg px-6 py-4 text-left w-1/4 min-w-[180px] ml-8 mb-8">
+                        <h1 className="text-xl font-bold text-white leading-tight mb-5">
+                            {collection.name}
+                        </h1>
+                        <p className="text-sm text-white">
+                            {collection.description}
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -54,14 +56,14 @@ const Collections = () => {
             <div className="w-full px-0">
                 {/* Thêm 2 hàng sản phẩm, không trùng dữ liệu */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 mt-4">
-                  {collection.products.slice(4, 12).map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
+                    {collection.products.slice(4, 12).map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 mt-4">
-                  {collection.products.slice(12, 20).map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
+                    {collection.products.slice(12, 20).map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                     {/* Cột trái: ảnh lớn */}

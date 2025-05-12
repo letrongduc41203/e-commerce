@@ -43,10 +43,10 @@ async function importAllData() {
   // await Banner.create(banners);
   // console.log('Đã import banners!');
 
-  // // Import collections (nhiều bản ghi)
-  // await Collection.deleteMany({});
-  // await Collection.insertMany(collections);
-  // console.log('Đã import collections!');
+  // Import collections (nhiều bản ghi)
+  await Collection.deleteMany({});
+  await Collection.insertMany(collections);
+  console.log('Đã import collections!');
 
   // // Import products (nhiều bản ghi)
   // await Product.deleteMany({});

@@ -13,6 +13,7 @@ const productSchema = new mongoose.Schema({
 const collectionSchema = new mongoose.Schema({
   id: Number,
   name: String,
+  description: String,
   slug: String,
   banner: String,
   modelImage: String,

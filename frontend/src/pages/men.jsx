@@ -47,12 +47,8 @@ const Men = () => {
                     alt={collection.name}
                     className="w-full h-full object-cover"
                 />
-                <div
-                    className="absolute bottom-0 left-0 flex items-end h-full w-full"
-                >
-                    <div
-                        className="rounded-lg px-6 py-4 text-left w-1/4 min-w-[180px] ml-8 mb-8"
-                    >
+                <div className="absolute bottom-0 left-0 flex items-end h-full w-full">
+                    <div className="rounded-lg px-6 py-4 text-left w-1/4 min-w-[180px] ml-8 mb-8">
                         <h1 className="text-xl font-bold text-white leading-tight mb-5">
                             {collection.name}
                         </h1>

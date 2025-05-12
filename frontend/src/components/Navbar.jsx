@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CartPopup from './CartPopup';
-import { Menu, X, Search, UserRound } from 'lucide-react';
+import { Menu, X, Search, UserRound, ShoppingCart } from 'lucide-react';
 // import { collections } from '../data/collections'; // Đã chuyển sang lấy từ API MongoDB
 
 export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDecrease, onRemove, user, onLogout }) {
@@ -190,11 +190,11 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                         </button>
                     ) : (
                         <button
-                            className="flex items-center gap-1 text-xs px-2 py-1 border rounded hover:bg-gray-100 relative"
+                            className="flex items-center gap-1 text-xs px-2 py-1 hover:bg-gray-100 relative"
                             onClick={() => navigate('/login')}
                             type="button"
                         >
-                            <UserRound className="w-5 h-5 cursor-pointer" />
+                            <UserRound />
                         </button>
                     )}
 
@@ -203,7 +203,7 @@ export function Navbar({ cartItems, isCartOpen, setIsCartOpen, onIncrease, onDec
                         onClick={e => { e.preventDefault(); setIsCartOpen(!isCartOpen); }}
                         style={{ background: 'none', border: 'none', padding: 0 }}
                     >
-                        <span className="text-2xl">🛒</span>
+                        <ShoppingCart />
                     </button>
                     {isCartOpen && (
                         <>
