@@ -5,18 +5,18 @@
 
 - **Frontend**: React, TailwindCSS, Vite
 - **Backend**: Node.js, Express, Mongoose, dotenv
-- **Database**: MongoDB (sản phẩm, banner, collection, gifts), PostgreSQL (quản lý user)
+- **Database**: MongoDB, PostgreSQL
 
-## Tính năng nổi bật
 
-### Admin Dashboard
-- **Giao diện quản trị chuyên nghiệp** với sidebar điều hướng, responsive.
-- **Thống kê tổng quan**: Số lượng đơn hàng, doanh thu, biểu đồ trạng thái đơn hàng (pie chart), doanh thu theo tháng (bar chart), đơn hàng gần đây.
-- **Quản lý đơn hàng**: Xem, lọc, tìm kiếm, phân trang, cập nhật trạng thái đơn hàng.
-- **Chi tiết đơn hàng**: Xem timeline, thông tin khách hàng, sản phẩm, cập nhật trạng thái.
-- **Quản lý sản phẩm**: Thêm, sửa, xoá, xem chi tiết sản phẩm, thao tác hàng loạt, lọc nâng cao.
-- **Form sản phẩm**: Thêm/sửa sản phẩm với kiểm tra dữ liệu, upload ảnh, nhập thông tin chi tiết, thông số, size, màu sắc.
-- **Bảo vệ route**: Các route quản trị được bảo vệ, chỉ admin truy cập.
+## 🖼️ Hình ảnh minh họa
+
+
+![](/e-commerce/images/localhost_3000_.png)
+![](/e-commerce/images/localhost_3000_checkout%20(1).png)
+![](/e-commerce/images/localhost_3000_collections_spring-summer-2025-for-women.png)
+![](/e-commerce/images/localhost_3000_cart.png)
+![](/e-commerce/images/localhost_3000_checkout.png)
+
 
 ## Cấu trúc thư mục
 
@@ -36,7 +36,7 @@ E-Commerce/
 │   │   ├── components/
 │   │   ├── data/
 │   │   ├── pages/
-│   │   │   └── admin/   # Trang quản trị (dashboard, order, product, user, ...)
+│   │   │   └── admin/   # Trang quản trị
 │   │   ├── services/
 │   │   └── ...
 │   ├── .env
@@ -77,7 +77,8 @@ node import_data.js
 
 ### 5. Chạy backend
 ```sh
-npm run dev
+cd ../backend
+node server.js
 ```
 
 ### 6. Chạy frontend
@@ -87,15 +88,11 @@ npm run dev
 ```
 
 ### 7. Truy cập ứng dụng
-- **Frontend**: http://localhost:5173
-- **Admin Dashboard**: http://localhost:5173/admin
+- **Frontend**: http://localhost:3000
+- **Admin Dashboard**: http://localhost:3000/admin/login
 - **Backend API**: http://localhost:5000
 
 ## Lưu ý
-- Đảm bảo port 5000 (backend) và 5173 (frontend) không bị chiếm dụng.
+- Đảm bảo port 5000 (backend) và 3000 (frontend) không bị chiếm dụng.
 - Nếu cập nhật dữ liệu mẫu, hãy chạy lại `node import_data.js`.
-- Chức năng quản lý user sử dụng PostgreSQL (nếu còn dùng).
 - Các route quản trị yêu cầu đăng nhập admin.
-
-## Liên hệ
-Nếu có thắc mắc hoặc cần hỗ trợ, vui lòng liên hệ admin dự án.
