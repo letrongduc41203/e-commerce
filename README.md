@@ -11,11 +11,12 @@
 ## 🖼️ Hình ảnh minh họa
 
 
-![UI](/e-commerce/images/localhost_3000_.png)
-![UI](/e-commerce/images/localhost_3000_checkout%20(1).png)
-![UI](/e-commerce/images/localhost_3000_collections_spring-summer-2025-for-women.png)
-![UI](/e-commerce/images/localhost_3000_cart.png)
-![UI](/e-commerce/images/localhost_3000_checkout.png)
+![Home Page](images/localhost_3000_.png)
+![Checkout Page](images/localhost_3000_checkout%20(1).png)
+![Collections Page](images/localhost_3000_collections_spring-summer-2025-for-women.png)
+![Shopping Cart](images/localhost_3000_cart.png)
+![Checkout Process](images/localhost_3000_checkout.png)
+
 
 
 ## Cấu trúc thư mục
